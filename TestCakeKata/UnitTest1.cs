@@ -81,16 +81,18 @@ namespace TestCakeKata
         }
         [Test]
         [TestCaseSource(nameof(InitTestCasesToppings))]
-        public void TestCakeWithManyToppingsShouldReturnValidName(Cake cake, List<Cake> listTopping, string expectedName, decimal expectedPrice)
+        public void TestCakeWithManyToppingsShouldReturnValidName(Cake cake, List<Cake> listTopping
+            , string expectedName, decimal expectedPrice)
         {
+            var cakeWithTopping = cake;
             foreach(CakeDecorator topping in listTopping)
             {
-                topping.InitCakeType(cake);
-                cake = topping._cakeType;
+                topping.InitCakeType(cakeWithTopping);
+                cakeWithTopping = topping;
             }
 
-            Assert.That(cake.GetName(), Is.EqualTo(expectedName));
-            Assert.That(cake.GetPrice(), Is.EqualTo(expectedPrice));
+            Assert.That(cakeWithTopping.GetName(), Is.EqualTo(expectedName));
+            Assert.That(cakeWithTopping.GetPrice(), Is.EqualTo(expectedPrice));
         }
 
     }
